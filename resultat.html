@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultat</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid #007BFF;
+        }
+
+        .card h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .card h3 {
+            color: #555;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .info-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .info-item {
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            border-left: 3px solid #007BFF;
+        }
+
+        .info-item label {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .info-item value {
+            color: #666;
+            font-size: 14px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #f9f9f9;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 3px solid #28a745;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .prix-badge {
+            background-color: #007BFF;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .prix-vip {
+            background-color: #ffc107;
+            color: #333;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #f5c6cb;
+            margin: 20px 0;
+        }
+
+        .button-group {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            background-color: #007BFF;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-retour {
+            background-color: #6c757d;
+            margin-right: 10px;
+        }
+
+        .btn-retour:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Résultats de votre recherche</h1>
+    </header>
+
+    <div class="container">
+        <div id="erreur" class="error" style="display:none;"></div>
+
+        <div class="card" id="cardDetails">
+            <h2>Détails du trajet</h2>
+            <div class="info-row" id="details">
+                <!-- Rempli par JavaScript -->
+            </div>
+        </div>
+
+        <div class="card" id="cardBus">
+            <h2>Bus disponibles</h2>
+            <ul id="listeBus">
+                <!-- Rempli par JavaScript -->
+            </ul>
+        </div>
+
+        <div class="button-group">
+            <button class="btn btn-retour" onclick="history.back()">← Retour</button>
+            <button class="btn" onclick="alert('Réservation en cours de développement')">Réserver un billet</button>
+        </div>
+    </div>
+
+    <script>
+        // Récupérer les données du localStorage
+        const depart = localStorage.getItem('depart');
+        const arrivee = localStorage.getItem('arrivee');
+        const date = localStorage.getItem('date');
+        const passagers = localStorage.getItem('passagers');
+
+        // Vérifier si toutes les données sont présentes
+        if (!depart || !arrivee || !date || !passagers) {
+            document.getElementById('erreur').style.display = 'block';
+            document.getElementById('erreur').innerHTML = '<strong>Erreur :</strong> Les données de recherche sont manquantes. Veuillez revenir au formulaire de recherche.';
+            document.getElementById('cardDetails').style.display = 'none';
+            document.getElementById('cardBus').style.display = 'none';
+            throw new Error('Données manquantes');
+        }
+
+        // Matrice de prix selon les trajets (Simple | VIP)
+        const prixTrajet = {
+            'Douala-Bafang': {simple: 15, vip: 30},
+            'Douala-Yaoundé': {simple: 25, vip: 45},
+            'Douala-Bamenda': {simple: 35, vip: 60},
+            'Douala-Garoua': {simple: 40, vip: 70},
+            'Bafang-Douala': {simple: 15, vip: 30},
+            'Bafang-Yaoundé': {simple: 20, vip: 35},
+            'Bafang-Bamenda': {simple: 25, vip: 45},
+            'Bafang-Garoua': {simple: 35, vip: 60},
+            'Yaoundé-Douala': {simple: 25, vip: 45},
+            'Yaoundé-Bafang': {simple: 20, vip: 35},
+            'Yaoundé-Bamenda': {simple: 18, vip: 35},
+            'Yaoundé-Garoua': {simple: 30, vip: 55},
+            'Bamenda-Douala': {simple: 35, vip: 60},
+            'Bamenda-Bafang': {simple: 25, vip: 45},
+            'Bamenda-Yaoundé': {simple: 18, vip: 35},
+            'Bamenda-Garoua': {simple: 28, vip: 50},
+            'Garoua-Douala': {simple: 40, vip: 70},
+            'Garoua-Bafang': {simple: 35, vip: 60},
+            'Garoua-Yaoundé': {simple: 30, vip: 55},
+            'Garoua-Bamenda': {simple: 28, vip: 50}
+        };
+
+        // Obtenir les prix pour le trajet sélectionné
+        const cleTrajet = depart + '-' + arrivee;
+        const prix = prixTrajet[cleTrajet] || {simple: 25, vip: 45};
+
+        // Afficher les détails du trajet
+        const detailsElement = document.getElementById('details');
+        detailsElement.innerHTML = `
+            <div class="info-item">
+                <label>Ville de départ</label>
+                <div>${depart}</div>
+            </div>
+            <div class="info-item">
+                <label>Ville d'arrivée</label>
+                <div>${arrivee}</div>
+            </div>
+            <div class="info-item">
+                <label>Date du voyage</label>
+                <div>${date}</div>
+            </div>
+            <div class="info-item">
+                <label>Nombre de passagers</label>
+                <div>${passagers}</div>
+            </div>
+        `;
+
+        // Afficher les bus disponibles
+        const listeBusElement = document.getElementById('listeBus');
+        const heures = ['08:00 - 10:00', '12:00 - 14:00', '16:00 - 18:00'];
+        let busHTML = '';
+
+        heures.forEach((heure, index) => {
+            busHTML += `
+                <li>
+                    <div>
+                        <strong>Bus ${String.fromCharCode(65 + index)}</strong> - ${heure}
+                    </div>
+                    <div>
+                        <span class="prix-badge">Simple: ${prix.simple}€</span>
+                        <span class="prix-badge prix-vip">VIP: ${prix.vip}€</span>
+                    </div>
+                </li>
+            `;
+        });
+
+        listeBusElement.innerHTML = busHTML;
+    </script>
+    <center><a href="index.html">retour</a></center>
+</body>
+</html>

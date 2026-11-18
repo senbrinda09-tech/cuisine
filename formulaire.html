@@ -1,0 +1,164 @@
+<html>
+<head>
+<title> les formulaires </title>
+<body>
+<form action="traitement.php" method="POST">
+    <!-- Tous les champs du formulaire ici -->
+<br/>
+    <button type="submit">Envoyer</button>
+
+<!-- Texte sur une ligne -->
+<input type="text" name="prenom" placeholder="Votre prénom">
+
+<!-- Email (validation automatique) -->
+<input type="email" name="email" placeholder="exemple@email.com">
+
+<!-- Téléphone -->
+<input type="tel" name="telephone" placeholder="06 12 34 56 78">
+
+<!-- Mot de passe (caractères masqués) -->
+<input type="password" name="motdepasse">
+
+<!-- Nombre avec flèches +/- -->
+<input type="number" name="age" min="0" max="120" step="1">
+
+<!-- Recherche (avec bouton × pour effacer) -->
+<input type="search" name="recherche" placeholder="Rechercher...">
+
+<!-- URL (validation automatique) -->
+<input type="url" name="siteweb" placeholder="https://...">
+
+<!-- Date (calendrier natif) -->
+<input type="date" name="naissance">
+
+<!-- Heure -->
+<input type="time" name="heure">
+
+<!-- Couleur (sélecteur de couleur) -->
+<input type="color" name="couleur_fond" value="#ff0000">
+
+<!-- Curseur -->
+<input type="range" name="volume" min="0" max="100" value="50">
+
+<!-- Fichier (upload) -->
+<input type="file" name="document">
+<textarea name="message" rows="5" cols="30" placeholder="Votre message..."></textarea>
+<select name="pays">
+    <option value="fr">France</option>
+    <option value="be">Belgique</option>
+    <option value="ch">Suisse</option>
+    <option value="ca">Canada</option>
+</select>
+<select name="couleur">
+    <option value="rouge">Rouge</option>
+    <option value="bleu" selected>Bleu</option>  <!-- selected = présélectionné -->
+    <option value="vert">Vert</option>
+</select>
+<select name="voiture">
+    <optgroup label="Françaises">
+        <option value="peugeot">Peugeot</option>
+        <option value="renault">Renault</option>
+    </optgroup>
+    <optgroup label="Allemandes">
+        <option value="bmw">BMW</option>
+        <option value="audi">Audi</option>
+    </optgroup>
+</select>
+<select name="langues[]" multiple size="4">
+    <option value="html">HTML</option>
+    <option value="css">CSS</option>
+    <option value="js">JavaScript</option>
+    <option value="php">PHP</option>
+</select>
+<!-- Une seule case -->
+<input type="checkbox" name="newsletter" value="oui" checked>  <!-- checked = cochée -->
+<label>Je souhaite recevoir la newsletter</label>
+
+<!-- Groupes de cases (plusieurs choix possibles) -->
+<input type="checkbox" name="loisirs[]" value="sport" id="sport">
+<label for="sport">Sport</label>
+
+<input type="checkbox" name="loisirs[]" value="lecture" id="lecture">
+<label for="lecture">Lecture</label>
+
+<input type="checkbox" name="loisirs[]" value="musique" id="musique">
+<label for="musique">Musique</label>
+<p>Sexe :</p>
+<input type="radio" name="sexe" value="homme" id="homme">
+<label for="homme">Homme</label>
+
+<input type="radio" name="sexe" value="femme" id="femme">
+<label for="femme">Femme</label>
+
+<input type="radio" name="sexe" value="autre" id="autre">
+<label for="autre">Autre</label>
+<!-- Bouton d'envoi (soumet le formulaire) -->
+<button type="submit">Envoyer</button>
+<input type="submit" value="Envoyer">
+
+<!-- Bouton de réinitialisation (efface tous les champs) -->
+<button type="reset">Effacer</button>
+<input type="reset" value="Effacer">
+
+<!-- Bouton générique (sans action par défaut) -->
+<button type="button" id="monBouton">Cliquez-moi</button>
+<input type="button" value="Cliquez-moi">
+<label for="nom">Nom complet :</label>
+<input type="text" id="nom" name="nom">
+<label>
+    Nom complet :
+    <input type="text" name="nom">
+	<fieldset>
+        <legend>Informations personnelles</legend>
+        
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom">
+        
+        <label for="email">Email :</label>
+        <input type="email" id="email" name="email">
+    </fieldset>
+    
+    <fieldset>
+        <legend>Préférences</legend>
+        
+        <input type="checkbox" name="newsletter" id="news">
+        <label for="news">Recevoir la newsletter</label>
+    </fieldset>
+    
+    <button type="submit">Envoyer</button>
+<!-- Champ obligatoire -->
+<input type="text" required>
+
+<!-- Longueur minimale et maximale -->
+<input type="text" minlength="3" maxlength="20">
+
+<!-- Valeur minimale et maximale (number, date, range) -->
+<input type="number" min="18" max="99">
+
+<!-- Pattern (expression régulière) -->
+<input type="text" pattern="[A-Za-z]{3,}" title="Au moins 3 lettres">
+
+<!-- Email et URL natifs -->
+<input type="email" required>
+<input type="url" required>
+    <!-- Code postal : 5 chiffres -->
+    <input type="text" pattern="[0-9]{5}" 
+           title="Code postal à 5 chiffres" required>
+    
+    <!-- Mot de passe : 8 caractères, 1 maj, 1 chiffre -->
+    <input type="password" pattern="(?=.*[A-Z])(?=.*[0-9]).{8,}"
+           title="8 caractères, 1 majuscule, 1 chiffre" required>
+    
+    <!-- Age entre 18 et 120 -->
+    <input type="number" min="18" max="120" required>
+<br/>
+<!-- Image informative -->
+<img src="graphique.png" alt="Graphique des ventes 2024 : +15%">
+
+<!-- Image décorative -->
+<img src="fleur.png" alt="">
+
+</label>
+</form>
+</body>
+</html>

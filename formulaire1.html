@@ -1,0 +1,60 @@
+<html>
+<head>
+<title> formulaire de candidature a un poste </title>
+</head>
+<body>
+<h1> FORMULAIRE DE CANDIDATURE A UN POSTE </h1>
+<br>
+<h2> Veuillez remplir le formulaire. </h2>
+<form action="traitement.php method="post">
+<table border="0">
+<tr>
+<td> Nom</td>
+<td> <input type="text" name="nom"> </td>
+</tr>
+<tr>
+<td> Prenom </td>
+<td> <input type="text" name="prenom"> </td>
+</tr> <br>
+<tr>
+ <td> naissance </td>
+<td> <input type="date" name="naissance"> </td>
+</tr>
+<tr>
+<td> sexe</td>
+<td> Homme : <input type="radio" name="sexe" value="M"> <br>
+     Femme : <input type="radio" name="sexe" value="F"> </td>
+</tr>
+<tr>
+<td> Quel est votre statut d'emploi actuel? </td>
+<td> Employé(e) : <input type="radio" name="Employé(e)" value="Employé(e)"> <br>
+Etudiant(e): <input type="radio" name="Etudiant(e)" value="Etudiant(e)"> <br>
+Sans emploi : <input type="radio" name="Sans emploi" value="Sans emploi"> <br>
+Independant(e) : <input type="radio" name="Independant(e)" value="Independant(e)"> </td>
+</tr>
+<tr>
+<td> Email </td>
+<td> <input type="email" name="email" placeholder="exemple@email.com"> </td>
+</tr>
+<br>
+<tr>
+<td> Tel </td>
+<td> <input type="tel" name="telephone" placeholder="000000000"> </td>
+</tr>
+<tr>
+<td> Poste a candidater </td>
+<td> <select name="poste a candidater">
+<option value=" poste 1> poste 1 </option>
+<option value=" poste 2> poste 2 </option>
+<option value=" poste 3> poste 3 </option>
+</td>
+</tr>
+<input type="search" name="cv" placeholder="https://..."> 
+<tr>
+<td> <button type="submit">Valider</button> </td>
+</tr>
+</table>
+</form>
+</body>
+</html>
+
